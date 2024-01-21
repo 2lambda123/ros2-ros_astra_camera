@@ -7,7 +7,6 @@ echo ""
 
 sudo cp "$(ros2 pkg prefix astra_camera)"/share/astra_camera/56-orbbec-usb.rules /etc/udev/rules.d
 
-
 echo ""
 echo "Restarting udev"
 echo ""
