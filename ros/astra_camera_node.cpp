@@ -32,8 +32,8 @@
 
 #include "astra_camera/astra_driver.h"
 
-static std::string get_command_option(const std::vector<std::string> &args, const std::string &option)
-{
+static std::string get_command_option(const std::vector<std::string> &args,
+                                      const std::string &option) {
   auto it = std::find(args.begin(), args.end(), option);
   if (it != args.end() && ++it != args.end()) {
     return *it;
@@ -41,16 +41,18 @@ static std::string get_command_option(const std::vector<std::string> &args, cons
   return std::string();
 }
 
-static bool get_command_option_exists(const std::vector<std::string> &args, const std::string &option)
-{
+static bool get_command_option_exists(const std::vector<std::string> &args,
+                                      const std::string &option) {
   return std::find(args.begin(), args.end(), option) != args.end();
 }
 
-static bool parse_command_options(int argc, char **argv, size_t *width, size_t *height,
-                                  double *framerate, size_t *depth_width, size_t *depth_height,
-                                  double *depth_framerate, astra_wrapper::PixelFormat *dformat,
-                                  bool *use_ir, bool *use_color, bool *use_depth)
-{
+static bool parse_command_options(int argc, char **argv, size_t *width,
+                                  size_t *height, double *framerate,
+                                  size_t *depth_width, size_t *depth_height,
+                                  double *depth_framerate,
+                                  astra_wrapper::PixelFormat *dformat,
+                                  bool *use_ir, bool *use_color,
+                                  bool *use_depth) {
   std::vector<std::string> args(argv, argv + argc);
 
   std::string width_str = get_command_option(args, "-w");
@@ -87,12 +89,11 @@ static bool parse_command_options(int argc, char **argv, size_t *width, size_t *
   if (!dformat_str.empty()) {
     if (dformat_str == "1MM") {
       *dformat = astra_wrapper::PixelFormat::PIXEL_FORMAT_DEPTH_1_MM;
-    }
-    else if (dformat_str == "100UM") {
+    } else if (dformat_str == "100UM") {
       *dformat = astra_wrapper::PixelFormat::PIXEL_FORMAT_DEPTH_100_UM;
-    }
-    else {
-      std::cerr << "Invalid depth format; must be \"1MM\" or \"100UM\"" << std::endl;
+    } else {
+      std::cerr << "Invalid depth format; must be \"1MM\" or \"100UM\""
+                << std::endl;
       return false;
     }
   }
@@ -104,7 +105,7 @@ static bool parse_command_options(int argc, char **argv, size_t *width, size_t *
   return true;
 }
 
-int main(int argc, char **argv){
+int main(int argc, char **argv) {
 
   // RGB
   size_t width = 1280;
@@ -115,7 +116,8 @@ int main(int argc, char **argv){
   size_t dwidth = 640;
   size_t dheight = 480;
   double dframerate = 30;
-  astra_wrapper::PixelFormat dformat = astra_wrapper::PixelFormat::PIXEL_FORMAT_DEPTH_1_MM;
+  astra_wrapper::PixelFormat dformat =
+      astra_wrapper::PixelFormat::PIXEL_FORMAT_DEPTH_1_MM;
 
   bool use_ir = true;
   bool use_color = true;
@@ -123,7 +125,9 @@ int main(int argc, char **argv){
 
   // TODO(clalancette): parsing the command-line options here is temporary until
   // we get parameters working in ROS2.
-  if (!parse_command_options(argc, argv, &width, &height, &framerate, &dwidth, &dheight, &dframerate, &dformat, &use_ir, &use_color, &use_depth)) {
+  if (!parse_command_options(argc, argv, &width, &height, &framerate, &dwidth,
+                             &dheight, &dframerate, &dformat, &use_ir,
+                             &use_color, &use_depth)) {
     return 1;
   }
 
@@ -135,7 +139,8 @@ int main(int argc, char **argv){
   pnh->set_parameter_if_not_set("use_color", use_color);
   pnh->set_parameter_if_not_set("use_depth", use_depth);
 
-  astra_wrapper::AstraDriver drv(n, pnh, width, height, framerate, dwidth, dheight, dframerate, dformat);
+  astra_wrapper::AstraDriver drv(n, pnh, width, height, framerate, dwidth,
+                                 dheight, dframerate, dformat);
 
   rclcpp::spin(n);
 

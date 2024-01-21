@@ -41,25 +41,19 @@
 
 #include "openni2/OpenNI.h"
 
-namespace astra_wrapper
-{
+namespace astra_wrapper {
 
 class AstraTimerFilter;
 
-class AstraFrameListener : public openni::VideoStream::NewFrameListener
-{
+class AstraFrameListener : public openni::VideoStream::NewFrameListener {
 public:
   AstraFrameListener();
 
-  virtual ~AstraFrameListener()
-  { };
+  virtual ~AstraFrameListener(){};
 
-  void onNewFrame(openni::VideoStream& stream);
+  void onNewFrame(openni::VideoStream &stream);
 
-  void setCallback(FrameCallbackFunction& callback)
-  {
-    callback_ = callback;
-  }
+  void setCallback(FrameCallbackFunction &callback) { callback_ = callback; }
 
   void setUseDeviceTimer(bool enable);
 
@@ -74,6 +68,6 @@ private:
   double prev_time_stamp_;
 };
 
-}
+} // namespace astra_wrapper
 
 #endif
