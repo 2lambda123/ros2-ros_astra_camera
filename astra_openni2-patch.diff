@@ -32,7 +32,7 @@ index bbbf213..cc8bfe0 100644
 +#endif
  	XnUInt16 nMemCpyLineSize = (XnUInt16)(nLineSize * sizeof(XnUInt16));
  	XnUInt16 nValue;
- 
+
 @@ -112,7 +125,14 @@ XnStatus XnMirrorThreeBytePixels(XnUChar* pBuffer, XnUInt32 nBufferSize, XnUInt3
  	XnUInt8* pSrcEnd = pSrc + nBufferSize;
  	XnUInt8* pDest = NULL;
@@ -46,7 +46,7 @@ index bbbf213..cc8bfe0 100644
 +#pragma GCC diagnostic pop
 +#endif
  	XnUInt16 nMemCpyLineSize = (XnUInt16)(nLineSize * 3);
- 
+
  	if (nMemCpyLineSize > XN_MIRROR_MAX_LINE_SIZE)
 diff --git a/Source/Drivers/orbbec/Sensor/XnFrameStreamProcessor.cpp b/Source/Drivers/orbbec/Sensor/XnFrameStreamProcessor.cpp
 index d6105ec..fc459e3 100644
@@ -70,7 +70,7 @@ index d6105ec..fc459e3 100644
 +#ifndef _WIN32
 +#pragma GCC diagnostic pop
 +#endif
- 
+
  XnFrameStreamProcessor::~XnFrameStreamProcessor()
  {
 diff --git a/Source/Drivers/orbbec/Sensor/XnSensorFirmwareParams.cpp b/Source/Drivers/orbbec/Sensor/XnSensorFirmwareParams.cpp
@@ -80,7 +80,7 @@ index 476b88d..7046b76 100644
 @@ -251,6 +251,10 @@ void XnSensorFirmwareParams::Free()
  	m_AllFirmwareParams.Clear();
  }
- 
+
 +#ifndef _WIN32
 +#pragma GCC diagnostic push
 +#pragma GCC diagnostic ignored "-Wformat-overflow="
@@ -89,12 +89,12 @@ index 476b88d..7046b76 100644
  {
  	XnStatus nRetVal = XN_STATUS_OK;
 @@ -275,6 +279,9 @@ XnStatus XnSensorFirmwareParams::AddFirmwareParam(XnActualIntProperty& Property,
- 
+
  	return (XN_STATUS_OK);
  }
 +#ifndef _WIN32
 +#pragma GCC diagnostic pop
 +#endif
- 
+
  XnStatus XnSensorFirmwareParams::AddFirmwareAudioParam(XnActualIntProperty& Property, XnUInt16 nFirmwareParam, XnFWVer nMinVer /* = XN_SENSOR_FW_VER_3_0 */, XnFWVer nMaxVer /* = XN_SENSOR_FW_VER_UNKNOWN */, XnUInt16 nValueIfNotSupported /* = 0 */)
  {
